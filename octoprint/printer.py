@@ -230,7 +230,7 @@ class Printer():
 		self._comm.cancelPrint()
 
 		if disableMotorsAndHeater:
-			self.commands(["M84", "M104 S0", "M140 S0", "M106 S0"]) # disable motors, switch off heaters and fan
+			self.commands(["M18"]) # disable motors
 
 		# reset line, height, print time
 		self._setCurrentZ(None)
