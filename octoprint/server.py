@@ -109,6 +109,14 @@ class PrinterStateConnection(tornadio2.SocketConnection):
 
 # Did attempt to make webserver an encapsulated class but ended up with __call__ failures
 
+
+@app.route("/temp/")
+def temp():
+	printer.command("M104 S220")
+        printer.command("M140 S110")
+        return render_template("temp.jinja2")
+    
+
 @app.route("/")
 def index():
 	return render_template(
