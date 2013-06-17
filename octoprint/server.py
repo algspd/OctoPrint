@@ -116,6 +116,12 @@ def temp():
         printer.command("M140 S110")
         return render_template("temp.jinja2")
     
+@app.route("/tempoff/")
+def tempoff():
+	printer.command("M104 S0")
+        printer.command("M140 S0")
+        return render_template("temp.jinja2")
+    
 
 @app.route("/")
 def index():
