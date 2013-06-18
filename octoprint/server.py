@@ -115,13 +115,21 @@ def temp():
 	printer.command("M104 S220")
         printer.command("M140 S110")
         return render_template("temp.jinja2")
-    
-@app.route("/tempoff/")
-def tempoff():
-	printer.command("M104 S0")
-        printer.command("M140 S0")
-        return render_template("temp.jinja2")
-    
+
+@app.route("/api/")
+# go to server:port/api/?gcode=M104S0 to send M104S0 to the printer
+def api():
+        if not printer.isOperational():
+                return("BE CAREFUL! printer is offline")
+        if printer.isPrinting():
+                return("BE CAREFUL! printer is printing")
+	if "gcode" in request.args.keys():
+	        gcode=request.args['gcode']
+	        if gcode=="":
+			return("Maybe you should specify a gcode")
+	        printer.command(gcode)
+	        return("Sending " + gcode)
+	return("Maybe you should specify a gcode")
 
 @app.route("/")
 def index():
